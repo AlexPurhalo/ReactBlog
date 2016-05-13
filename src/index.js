@@ -1,19 +1,19 @@
-// React Modules
+// React Modules 
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// Redux Modules
+// Redux Modules 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
-// Router Module
+// Router Module 
 import { Router, browserHistory } from 'react-router';
 
-// Connections
+// Connections  
 import reducers from './reducers';
 import routes from './routes';
 
-// MiddleWare
+// MiddleWare 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 // Data Rendering

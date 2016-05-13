@@ -4,17 +4,13 @@ import { Route, IndexRoute } from 'react-router';
 
 // Components
 import App from './components/app';
+// 3. To make 'PostIndex' component active we import it
+import PostsIndex from './components/post_index';
 
-// 1. Here we add a check Component
-const Greeting = () => {
-    return <div>Hey there!</div>
-};
-
-// 2 Here we define different paths for one check component
+// Paths
+// 2. Here we add a new 'PostIndex' component as IndexRoute to make its as root route
 export default (
     <Route path="/" component={App} >
-        <Route path="greet1" component={Greeting} />
-        <Route path="greet2" component={Greeting} />
-        <Route path="greet3" component={Greeting} />
+        <IndexRoute component={PostsIndex} />
     </Route>
 );
