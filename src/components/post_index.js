@@ -1,12 +1,15 @@
+//In this section we will provide a  'Data Fetching'
+
 // Module
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchPosts } from '../actions/index';
 
-// 1. We add our class component that render a data with posts to blog
+//
 class PostIndex extends Component {
-// 2. Here we pass a 'componentWillMount' function that calls action creator to fetch posts data
     componentWillMount() {
-// 3. To check that it works we can type this: console.log('calls action creator to fetch posts')
-        
+        this.props.fetchPosts()
     }
     render() {
         return (
@@ -17,4 +20,13 @@ class PostIndex extends Component {
     }
 }
 
-export default PostIndex;
+
+// In this way this could be looks
+// function mapDispatchToProps(dispatch){
+//     return bindActionCreators({ fetchPosts }, dispatch)
+// }
+// export default connect(null, mapDispatchToProps)(PostIndex);
+
+// But we want make little refactor
+// Also this could has '{ fetchPosts: fetchPosts } but we've made shortly 
+export default connect(null, { fetchPosts })(PostIndex);
