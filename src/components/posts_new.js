@@ -1,20 +1,29 @@
+// Modules
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { createPost } from '../actions/index';
 import { Link } from 'react-router';
 
+// Form Component
 class PostsNew extends Component {
-// 4. Under one of the input we gonna add div that shows error message, example: <div>'{title.error}'</div>
-// 5. We add 'title.touched' to expression to add div with error only when we touch input
-//    '{ title.touched ? title.error : '' }' if validation see something wrong it
-//    add 'title.error' else add empty string ''
-// 6. Also we want add red border with red text if we have problem.
-//    For this we add one more class to div with form control
-//    We add interpolation that helps show 'has-danger' class if we have a problem and otherwise we take empty class
+// 3. To make properties valid while we submit form we add static 'contextTypes' object
+//    This object takes 'router' as key with 'PropTypes.objects' value
+    static contextTypes = {
+        router: PropTypes.object
+    };
+
+// 2. Here we cans see 'onSubmit' function with 'props' that are title, content, categories
+//    Also we can see 'createPost that create a request with Data passed into parameter
+//    To add redirect after form sending we add 'then' method with function for route changing 
+    onSubmit(props) {
+        this.props.createPost(props).then(() => { this.context.router.push('/')});
+    }
+
+// 1. For form submit with parameters we add here 'onSubmit' function that takes 'props' as parameter
     render() {
         const { fields: { title, categories, content }, handleSubmit } = this.props;
         return (
-            <form onSubmit={handleSubmit(this.props.createPost)}>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <h3>Create a New Post</h3>
                 <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`} >
                     <label>Title</label>
@@ -38,10 +47,9 @@ class PostsNew extends Component {
     }
 }
 
-// 1. Here we create a function for data validation
+// Fields Validation
 function validate(values) {
     const errors = {};
-// 3. If data from title is false, undefined or null we show error
     if (!values.title) {
         errors.title = 'Enter a username'
     }
@@ -55,7 +63,7 @@ function validate(values) {
     return errors
 }
 
-// 2. Here we pass this function as third key of object that goes as argument to redux form function
+// Navigation
 export default reduxForm({
     form: 'PostNewForm',
     fields: ['title', 'categories', 'content'],
